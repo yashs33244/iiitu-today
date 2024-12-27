@@ -1,9 +1,6 @@
 services:
   web:
-    image: my-reddit-clone
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: yashs3324/my-reddit-clone
     ports:
       - "3000:3000"
     environment:
