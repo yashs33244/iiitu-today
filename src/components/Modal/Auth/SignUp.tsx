@@ -17,22 +17,35 @@ const SignUp: React.FC = () => {
     conformPassword: "",
   });
   const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const searchBorder = useColorModeValue("blue.500", "#4A5568");
   const inputBg = useColorModeValue("gray.50", "#4A5568");
   const focusedInputBg = useColorModeValue("white", "#2D3748");
   const placeholderColor = useColorModeValue("gray.500", "#CBD5E0");
 
-  //console.log(signUpForm);
-
   const [createUserWithEmailAndPassword, userCred, loading, userError] =
     useCreateUserWithEmailAndPassword(auth);
+
+  const validateEmail = (email: string) => {
+    if (!email.endsWith("@iiitu.ac.in")) {
+      setEmailError("Please use your IIITU college email (@iiitu.ac.in)");
+      return false;
+    }
+    setEmailError("");
+    return true;
+  };
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (error) setError("");
+    if (emailError) setEmailError("");
+
+    if (!validateEmail(signUpForm.email)) {
+      return;
+    }
 
     if (signUpForm.password !== signUpForm.conformPassword) {
-      setError("Password Do Not Match");
+      setError("Passwords Do Not Match");
       return;
     }
 
@@ -40,7 +53,9 @@ const SignUp: React.FC = () => {
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // update state
+    if (event.target.name === "email") {
+      setEmailError("");
+    }
     setSignUpForm((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -65,7 +80,7 @@ const SignUp: React.FC = () => {
       <Input
         required
         name="email"
-        placeholder="Email..."
+        placeholder="Email (@iiitu.ac.in)"
         type="email"
         mb={2}
         onChange={onChange}
@@ -83,7 +98,14 @@ const SignUp: React.FC = () => {
           borderColor: searchBorder,
         }}
         bg={inputBg}
+        pattern=".+@iiitu\.ac\.in$"
+        title="Please enter your IIITU email address"
       />
+      {emailError && (
+        <Text textAlign="center" color="red" fontSize="10pt" mb={2}>
+          {emailError}
+        </Text>
+      )}
       <Input
         required
         name="password"
@@ -129,15 +151,13 @@ const SignUp: React.FC = () => {
         }}
         bg={inputBg}
       />
-      {error ||
-        (userError && (
-          <Text textAlign="center" color="red" fontSize="10px">
-            {error ||
-              FIREBASE_ERRORS[
-                userError.message as keyof typeof FIREBASE_ERRORS
-              ]}
-          </Text>
-        ))}
+      {(error || userError || emailError) && (
+        <Text textAlign="center" color="red" fontSize="10px">
+          {error ||
+            emailError ||
+            FIREBASE_ERRORS[userError?.message as keyof typeof FIREBASE_ERRORS]}
+        </Text>
+      )}
       <Button
         width="100%"
         height="36px"

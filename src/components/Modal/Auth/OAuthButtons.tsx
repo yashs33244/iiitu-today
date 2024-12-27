@@ -23,20 +23,7 @@ const OAuthButtons: React.FC = () => {
 
   return (
     <Flex direction="column" width="100%" mb={4}>
-      <Button
-        variant="oauth"
-        _hover={{ bg: hoverBg }}
-        mb={2}
-        isLoading={loading}
-        onClick={() => signInWithGoogle()}
-      >
-        <Image src="/images/googlelogo.png" height="20px" mr={4} />
-        Continue with Google
-      </Button>
-      <Button variant="oauth" _hover={{ bg: hoverBg }}>
-        Some Other Provider
-      </Button>
-      {error && <Text>{error.message}</Text>}
+      no oauth
     </Flex>
   );
 };

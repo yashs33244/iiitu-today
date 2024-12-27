@@ -15,6 +15,7 @@ const Login: React.FC<LoginProps> = () => {
     email: "",
     password: "",
   });
+  const [emailError, setEmailError] = useState("");
   const searchBorder = useColorModeValue("blue.500", "#4A5568");
   const inputBg = useColorModeValue("gray.50", "#4A5568");
   const focusedInputBg = useColorModeValue("white", "#2D3748");
@@ -23,13 +24,30 @@ const Login: React.FC<LoginProps> = () => {
   const [signInWithEmailAndPassword, user, loading, error] =
     useSignInWithEmailAndPassword(auth);
 
+  const validateEmail = (email: string) => {
+    if (!email.endsWith("@iiitu.ac.in")) {
+      setEmailError("Please use your IIITU college email (@iiitu.ac.in)");
+      return false;
+    }
+    setEmailError("");
+    return true;
+  };
+
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setEmailError("");
+
+    if (!validateEmail(loginForm.email)) {
+      return;
+    }
+
     signInWithEmailAndPassword(loginForm.email, loginForm.password);
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // update state
+    if (event.target.name === "email") {
+      setEmailError("");
+    }
     setLoginForm((prev) => ({
       ...prev,
       [event.target.name]: event.target.value,
@@ -41,7 +59,7 @@ const Login: React.FC<LoginProps> = () => {
       <Input
         required
         name="email"
-        placeholder="Email..."
+        placeholder="Email (@iiitu.ac.in)"
         type="email"
         mb={2}
         onChange={onChange}
@@ -59,7 +77,14 @@ const Login: React.FC<LoginProps> = () => {
           borderColor: searchBorder,
         }}
         bg={inputBg}
+        pattern=".+@iiitu\.ac\.in$"
+        title="Please enter your IIITU email address"
       />
+      {emailError && (
+        <Text textAlign="center" color="red" fontSize="10pt" mb={2}>
+          {emailError}
+        </Text>
+      )}
       <Input
         required
         name="password"
