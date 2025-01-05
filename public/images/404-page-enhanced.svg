@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
+    <!-- Background with gradient -->
+    <defs>
+        <linearGradient id="bgGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" style="stop-color:#f8f9fa;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#e9ecef;stop-opacity:1" />
+        </linearGradient>
+        
+        <!-- Pulse animation for wifi signals -->
+        <animate 
+            xlink:href="#wifiSignal1"
+            attributeName="opacity"
+            values="0.3;1;0.3"
+            dur="2s"
+            repeatCount="indefinite"/>
+            
+        <!-- Gear rotation animation -->
+        <animateTransform
+            xlink:href="#mainGear"
+            attributeName="transform"
+            type="rotate"
+            from="0 400 300"
+            to="360 400 300"
+            dur="20s"
+            repeatCount="indefinite"/>
+    </defs>
+    
+    <!-- Background -->
+    <rect width="800" height="600" fill="url(#bgGradient)"/>
+    
+    <!-- Main Gear -->
+    <g id="mainGear" transform="translate(400 300)">
+        <circle cx="0" cy="0" r="180" fill="none" stroke="#2d3748" stroke-width="24"/>
+        <!-- Gear teeth -->
+        <g id="gearTeeth">
+            {[...Array(12)].map((_, i) => `
+                <rect 
+                    x="-12" 
+                    y="-190" 
+                    width="24" 
+                    height="40" 
+                    fill="#2d3748"
+                    transform="rotate(${i * 30})"
+                />
+            `).join('')}
+        </g>
+    </g>
+    
+    <!-- Mountains with depth -->
+    <path d="M200 380 
+             L350 250 
+             L450 350 
+             L600 220 
+             L700 380" 
+          fill="#4a5568" 
+          stroke="#2d3748" 
+          stroke-width="4"/>
+    <path d="M150 380 
+             L300 280 
+             L400 380 
+             L550 260 
+             L650 380" 
+          fill="#718096" 
+          stroke="#4a5568" 
+          stroke-width="4"/>
+    
+    <!-- Stylized water waves -->
+    <path d="M100 420 
+             Q250 390, 400 420 
+             T700 420" 
+          fill="none" 
+          stroke="#4299e1" 
+          stroke-width="6"
+          opacity="0.8">
+        <animate 
+            attributeName="d" 
+            dur="3s"
+            repeatCount="indefinite"
+            values="
+                M100 420 Q250 390, 400 420 T700 420;
+                M100 420 Q250 450, 400 420 T700 420;
+                M100 420 Q250 390, 400 420 T700 420"
+        />
+    </path>
+    
+    <!-- WiFi Signals -->
+    <g id="wifiSignals" transform="translate(400 280)">
+        <path id="wifiSignal1" 
+              d="M-120 0 Q0 -80 120 0" 
+              fill="none" 
+              stroke="#4299e1" 
+              stroke-width="8"
+              opacity="0.8"/>
+        <path id="wifiSignal2" 
+              d="M-80 0 Q0 -60 80 0" 
+              fill="none" 
+              stroke="#4299e1" 
+              stroke-width="8"
+              opacity="0.6"/>
+        <path id="wifiSignal3" 
+              d="M-40 0 Q0 -40 40 0" 
+              fill="none" 
+              stroke="#4299e1" 
+              stroke-width="8"
+              opacity="0.4"/>
+    </g>
+    
+    <!-- Book symbol -->
+    <g transform="translate(400 300)">
+        <path d="M-40 -20 
+                 L40 -20 
+                 Q50 -20 50 -10 
+                 L50 30 
+                 Q50 40 40 40 
+                 L-40 40 
+                 Q-50 40 -50 30 
+                 L-50 -10 
+                 Q-50 -20 -40 -20" 
+              fill="#2d3748"/>
+        <path d="M-30 -15 L30 -15" stroke="white" stroke-width="3"/>
+        <path d="M-30 0 L30 0" stroke="white" stroke-width="3"/>
+        <path d="M-30 15 L30 15" stroke="white" stroke-width="3"/>
+    </g>
+    
+    <!-- 404 Text with better typography -->
+    <g transform="translate(400 480)">
+        <text x="0" 
+              y="0" 
+              font-family="Arial, sans-serif" 
+              font-size="72" 
+              font-weight="bold" 
+              text-anchor="middle" 
+              fill="#2d3748">404</text>
+        <text x="0" 
+              y="40" 
+              font-family="Arial, sans-serif" 
+              font-size="28" 
+              text-anchor="middle" 
+              fill="#4a5568">Page Not Found</text>
+    </g>
+</svg>

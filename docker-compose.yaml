@@ -1,6 +1,6 @@
 services:
   web:
-    image: yashs3324/my-reddit-clone
+    image: yashs3324/my-reddit-clone:latest
     ports:
       - "3000:3000"
     environment:
@@ -13,3 +13,11 @@ services:
       - NEXT_PUBLIC_FIREBASE_APP_ID=${NEXT_PUBLIC_FIREBASE_APP_ID}
       - NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID}
       - NEXT_PUBLIC_CRYPTO_SECRET_PASS=${NEXT_PUBLIC_CRYPTO_SECRET_PASS}
+volumes:
+  web_data:
+  db_data:
+    driver: local # Define the driver and options under the volume name
+    driver_opts:
+      type: none
+      device: /data/db_data
+      o: bind
