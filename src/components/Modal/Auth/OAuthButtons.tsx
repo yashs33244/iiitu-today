@@ -23,7 +23,7 @@ const OAuthButtons: React.FC = () => {
 
   return (
     <Flex direction="column" width="100%" mb={4}>
-      no oauth
+      Only for IIIT UNA students
     </Flex>
   );
 };
